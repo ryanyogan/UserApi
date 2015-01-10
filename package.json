@@ -1,0 +1,11 @@
+{
+  "name": "UserApi",
+  "version": "0.0.1",
+  "description": "A CRUD HTTP Api in Koa",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ryan Yogan",
+  "license": "ISC"
+}
