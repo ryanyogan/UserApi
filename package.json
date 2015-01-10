@@ -4,8 +4,12 @@
   "description": "A CRUD HTTP Api in Koa",
   "main": "app.js",
   "scripts": {
+    "start": "node --harmony app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ryan Yogan",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^0.14.0"
+  }
 }
