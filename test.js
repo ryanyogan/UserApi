@@ -1,6 +1,7 @@
 var app = require('./app');
 var request = require('supertest').agent(app.listen());
 var co = require('co');
+var users = require('./userRoutes').users;
 
 describe("Simple user HTTP Crud API", function() {
   var aUser = {};
@@ -16,7 +17,7 @@ describe("Simple user HTTP Crud API", function() {
 
   var removeAll = function(done) {
     co(function * () {
-      yield app.users.remove({});
+      yield users.remove({});
     }).then(done);
   };
 
@@ -40,7 +41,7 @@ describe("Simple user HTTP Crud API", function() {
 
   it("updates an exisiting user", function(done) {
     co(function *() {
-      var insertedUser = yield app.users.insert(aUser);
+      var insertedUser = yield users.insert(aUser);
       var url = "/user/" + insertedUser._id;
 
       request
@@ -53,7 +54,7 @@ describe("Simple user HTTP Crud API", function() {
 
   it("deletes an existing user", function(done) {
     co(function *() {
-      var insertedUser = yield app.users.insert(aUser);
+      var insertedUser = yield users.insert(aUser);
       var url = "/user/" + insertedUser._id;
 
       request
@@ -64,7 +65,7 @@ describe("Simple user HTTP Crud API", function() {
 
   it("gets existing user by id", function(done) {
     co(function *() {
-      var insertedUser = yield app.users.insert(aUser);
+      var insertedUser = yield users.insert(aUser);
       var url = "/user/" + insertedUser._id;
 
       request
