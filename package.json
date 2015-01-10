@@ -10,6 +10,7 @@
   "author": "Ryan Yogan",
   "license": "ISC",
   "dependencies": {
+    "co": "^4.1.0",
     "co-body": "^1.0.0",
     "co-monk": "^1.0.0",
     "koa": "^0.14.0",
