@@ -7,8 +7,18 @@ describe("Simple user HTTP Crud API", function() {
 
   beforeEach(function(done) {
     aUser = { name: "Ryan", age: 29, height: 1.95 };
-    done();
+    removeAll(done);
   });
+
+  afterEach(function(done) {
+    removeAll(done);
+  });
+
+  var removeAll = function(done) {
+    co(function * () {
+      yield app.users.remove({});
+    }).then(done);
+  };
 
   it("adds new users", function(done) {
     request
@@ -26,6 +36,30 @@ describe("Simple user HTTP Crud API", function() {
       .send(aUser)
       .expect("name required")
       .expect(400, done);
+  });
+
+  it("updates an exisiting user", function(done) {
+    co(function *() {
+      var insertedUser = yield app.users.insert(aUser);
+      var url = "/user/" + insertedUser._id;
+
+      request
+        .put(url)
+        .send({ name: "Herman", age: 11, height: 1.0 })
+        .expect("location", url)
+        .expect(204, done);
+    });
+  });
+
+  it("deletes an existing user", function(done) {
+    co(function *() {
+      var insertedUser = yield app.users.insert(aUser);
+      var url = "/user/" + insertedUser._id;
+
+      request
+        .del(url)
+        .expect(200, done);
+    });
   });
 
   it("gets existing user by id", function(done) {

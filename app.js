@@ -10,6 +10,8 @@ var users = wrap(db.get('users'));
 
 app.use(routes.post('/user', addUser));
 app.use(routes.get('/user/:id', getUser));
+app.use(routes.put('/user/:id', updateUser));
+app.use(routes.del('/user/:id', deleteUser));
 
 app.listen(3000);
 console.log("The app is running on port 3000");
@@ -25,6 +27,21 @@ function *addUser() {
   this.set("location", "/user/" + insertedUser._id);
   this.status = 200;
 }
+
+function *updateUser(id) {
+  var userFromRequest = yield parse(this);
+
+  yield users.updateById(id, userFromRequest);
+
+  this.set("location", "/user/" + id);
+  this.status = 204;
+}
+
+function *deleteUser(id) {
+  yield users.remove({ _id: id });
+
+  this.status = 200;
+};
 
 function *getUser(id) {
   var user = yield users.findById(id);
